@@ -1,0 +1,11 @@
+.route, .route a {
+  color: #606060;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+}
+  
+.route a {
+  cursor: pointer;
+  text-decoration: none;
+}

@@ -1,0 +1,71 @@
+<div class="container">
+    <!-- route -->
+    <span class="route">
+        <a [routerLink]="['']">Iron Revolution Center</a> / <a [routerLink]="['/main-dashboard']">Dashboard</a>
+    </span>
+
+    <!-- title -->
+    <div class="main-container">
+        <div class="title">
+            <span class="container-title"><mat-icon class="container-icon">home</mat-icon>Dashboard</span>
+        </div>
+
+        <!-- filters -->
+        <div class="filter-container">
+            <div class="list-branches">
+                <span class="branch">Sucursal</span>
+                <select class="branches" 
+                        [(ngModel)]="selectBranchId" 
+                        name="branch"
+                        (ngModelChange)="onBranchChange($event)">
+                    <option value="">Todos</option>
+                    <option *ngFor="let branch of branch" 
+                            [value]="branch.sucursal_Id">
+                            {{ branch.ubicacion }}
+                    </option>                        
+                </select>
+            </div>
+            <button class="clean-button" (click)="cleanFilters()">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+                Limpiar
+            </button>
+            <mat-icon class="apply-filters-icon">tune</mat-icon>
+        </div>
+
+        <!-- cards -->
+        <div class="card-container">
+            <div class="card clients-registered">
+                <span class="title">Clientes</span>
+                <span class="subtitle">Clientes registrados</span>
+                <span class="count">{{ dashboard?.clientes_Registrados }}</span>
+            </div>
+            <div class="card clients-active">
+                <span class="title">Clientes</span>
+                <span class="subtitle">Clientes activos en la sucursal</span>
+                <span class="count">{{ dashboard?.clientes_Activos }}</span>
+            </div>
+            <div class="card employees-registered">
+                <span class="title">Empleados</span>
+                <span class="subtitle">Empleados registrados</span>
+                <span class="count">{{ dashboard?.empleados_Registrados }}</span>
+            </div>
+            <div class="card most-frequent">
+                <span class="title">Más frecuentado</span>
+                <span class="location">{{ dashboard?.sucursal_Mas_Frecuentada }}</span>
+                <mat-icon class="icon-most-frequent">people</mat-icon>
+            </div>
+        </div>
+
+        <!-- charts -->
+        <div class="charts-container">
+            <div class="preferences-container">
+                <span class="chart-preferences">Preferencias</span>
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="most-popular-container">
+                <span class="chart-most-popular">Membresías populares</span>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
