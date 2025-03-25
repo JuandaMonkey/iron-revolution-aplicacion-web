@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { provideRouter, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 // components
 import { MainDashboardComponent } from '../component/dashboard/main-dashboard.component';
@@ -21,9 +21,3 @@ export const routes: Routes = [
     { path: 'branches-management', component: BranchesManagementComponent },
     { path: 'users-management', component: UsersManagementComponent }
 ];
-
-@NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-  })
-  export class AppRoutingModule { }

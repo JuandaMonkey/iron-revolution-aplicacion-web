@@ -1,5 +1,105 @@
 <div class="container">
+    <!-- route -->
     <span class="route">
         <a [routerLink]="['']">Iron Revolution Center</a> / <a [routerLink]="['/statistics-overview']">Estadísticas</a>
     </span>
+
+    <!-- title -->
+    <div class="main-container">
+        <div class="title">
+            <span class="container-title"><mat-icon class="container-icon">bar_chart</mat-icon>Estadísticas</span>
+        </div>
+
+        <!-- filters -->
+        <div class="filter-container">
+            <div class="list-branches">
+                <span class="branch">Sucursal</span>
+                <select class="branches" 
+                        [(ngModel)]="selectBranchId" 
+                        name="branch">
+                    <option value="">Todos</option>
+                    <option *ngFor="let branch of branch" 
+                            [value]="branch.sucursal_Id">
+                            {{ branch.ubicacion }}
+                    </option>                        
+                </select>
+            </div>
+            <div class="select-days">
+                <span class="date">Fecha</span>
+                <div class="select-start-end-day">
+                    <input class="start-day"
+                           id="startDay"
+                           type="date"
+                           [(ngModel)]="selectStartDay" 
+                           name="startDay"
+                           [max]="selectMaxDate">
+                    <span class="medium"> - </span>
+                    <input class="end-day"
+                           id="endDay"
+                           type="date"
+                           [(ngModel)]="selectEndDay" 
+                           name="endDay"
+                           [max]="selectMaxDate">
+                </div>
+            </div>
+            <button class="clean-button" (click)="cleanFilters()">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+                Limpiar
+            </button>
+            <mat-icon class="apply-filters-icon">tune</mat-icon>
+        </div>
+
+        <!-- cards -->
+        <div class="card-container">
+            <div class="card clients-entered">
+                <span class="title">Clientes</span>
+                <span class="subtitle">Clientes que ingresaron</span>
+                <span class="count">{{ 0 }}</span>
+            </div>
+            <div class="card busiest-day">
+                <span class="title">Día</span>
+                <span class="subtitle">Día mas frecuentado</span>
+                <span class="day">{{ 'N/A' }}</span>
+            </div>
+            <div class="card busiest-schedule">
+                <span class="title">Horario</span>
+                <span class="subtitle">Horario mas frecuentado</span>
+                <div class="show-time">
+                    <span class="star-hour">{{ '0:00' }}</span>
+                    <span class="medium"> - </span>
+                    <span class="end-hour">{{ '0:00' }}</span>
+                </div>
+            </div>
+        </div> 
+
+        <!-- table -->
+        <div class="table-container">
+            <span class="table-title">Centro de actividad</span>
+            <table class="table-activity-center">
+                <thead>
+                    <tr>
+                        <th>NIP</th>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let activityCenter of activityCenter">
+                        <td>{{ activityCenter.cliente.nip }}</td>
+                        <td>{{ activityCenter?.cliente?.nombre_Completo ?? 'N/A' }}</td>
+                        <td>{{ activityCenter?.cliente?.sucursal?.ubicacion ?? 'N/A' }}</td>
+                        <td>{{ activityCenter.entrada }}</td>
+                        <td>{{ activityCenter.salida }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- paged -->
+            <div class="paged-container">
+                
+            </div>
+        </div>
+    </div>
 </div>

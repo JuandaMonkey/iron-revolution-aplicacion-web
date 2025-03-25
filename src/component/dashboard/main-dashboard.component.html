@@ -37,21 +37,21 @@
             <div class="card clients-registered">
                 <span class="title">Clientes</span>
                 <span class="subtitle">Clientes registrados</span>
-                <span class="count">{{ dashboard?.clientes_Registrados }}</span>
+                <span class="count">{{ dashboard?.clientes_Registrados ?? 0 }} </span>
             </div>
             <div class="card clients-active">
                 <span class="title">Clientes</span>
                 <span class="subtitle">Clientes activos en la sucursal</span>
-                <span class="count">{{ dashboard?.clientes_Activos }}</span>
+                <span class="count">{{ dashboard?.clientes_Activos ?? 0 }}</span>
             </div>
             <div class="card employees-registered">
                 <span class="title">Empleados</span>
                 <span class="subtitle">Empleados registrados</span>
-                <span class="count">{{ dashboard?.empleados_Registrados }}</span>
+                <span class="count">{{ dashboard?.empleados_Registrados ?? 0 }}</span>
             </div>
             <div class="card most-frequent">
                 <span class="title">Más frecuentado</span>
-                <span class="location">{{ dashboard?.sucursal_Mas_Frecuentada }}</span>
+                <span class="location">{{ dashboard?.sucursal_Mas_Frecuentada ?? 'N/A' }}</span>
                 <mat-icon class="icon-most-frequent">people</mat-icon>
             </div>
         </div>

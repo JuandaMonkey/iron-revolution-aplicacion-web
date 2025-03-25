@@ -35,7 +35,7 @@ export class MainDashboardComponent implements OnInit {
   // information
   dashboard: Dashboard | null = null;
 
-  constructor(
+  constructor (
     private branchService: BranchesService,
     private dashboardService: DashboardService
   ) {}

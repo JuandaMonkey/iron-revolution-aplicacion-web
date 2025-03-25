@@ -3,16 +3,15 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
-// modules
-import { AppModule } from './app.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AppModule, 
-            RouterOutlet, 
+  imports: [RouterOutlet, 
             CommonModule, 
-            MatIconModule
+            MatIconModule,
+            RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
