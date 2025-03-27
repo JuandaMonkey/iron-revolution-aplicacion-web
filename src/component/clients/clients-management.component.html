@@ -1,1 +1,96 @@
-<p>clients-management works!</p>
+<div class="container">
+    <!-- route -->
+    <span class="route">
+        <a [routerLink]="['']">Iron Revolution Center</a> / <a [routerLink]="['/clients-management']">Clientes</a>
+    </span>
+
+    <!-- container -->
+    <div class="main-container">
+        <!-- title -->
+        <div class="title">
+            <span class="container-title"><mat-icon class="container-icon">people</mat-icon>Clientes</span>
+        </div>
+
+        <!-- filters -->
+        <div class="filter-container">
+            <div class="list-memberships">
+                <span class="membership">Membresía</span>
+                <select class="memberships" 
+                        [(ngModel)]="selectMembershipId" 
+                        name="membership"
+                        (ngModelChange)="onChange()">
+                    <option value="">Todos</option>
+                    <option *ngFor="let membership of membership" 
+                            [value]="membership.membresia_Id">
+                            {{ membership.nombre }}
+                    </option>                        
+                </select>
+            </div>
+            <div class="select-days">
+                <span class="date">Fecha</span>
+                <div class="select-start-end-day">
+                    <input class="start-day"
+                           id="startDay"
+                           type="date"
+                           [(ngModel)]="selectStartDay" 
+                           name="startDay"
+                           [max]="selectMaxDate"
+                           (ngModelChange)="onChange()">
+                    <span class="medium"> - </span>
+                    <input class="end-day"
+                           id="endDay"
+                           type="date"
+                           [(ngModel)]="selectEndDay" 
+                           name="endDay"
+                           (ngModelChange)="onChange()">
+                </div>
+            </div>
+            <input class="search-bar"
+                   placeholder="Buscar"
+                   type="text"
+                   [(ngModel)]="clientNIP" 
+                   (keyup)="getClientByNIP(clientNIP)">
+            <button class="clean-button"
+                    (click)="cleanFilters()">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+                Limpiar
+            </button>
+            <mat-icon class="apply-filters-icon">tune</mat-icon>
+        </div>        
+
+        <button class="register-client-button">
+            <mat-icon class="add-icon">add</mat-icon>
+            Agregar
+        </button>
+
+        <!-- table -->
+        <div class="table-container">
+            <table class="table-clients">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>NIP</th>
+                        <th>Nombre</th>
+                        <th>Celular</th>
+                        <th>Membresía</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let clients of clients">
+                        <td>{{ 'N/A' }}</td>
+                        <td>{{ clients.nip }}</td>
+                        <td>{{ clients.nombre_Completo }}</td>
+                        <td>{{ clients.celular }}</td>
+                        <td>{{ clients.membresia }}</td>
+                        <td>{{ clients.fecha_Inicio }}</td>
+                        <td>{{ clients.fecha_Fin }}</td>
+                        <td>{{ '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
