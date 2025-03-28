@@ -58,7 +58,8 @@
             <mat-icon class="apply-filters-icon">tune</mat-icon>
         </div>        
 
-        <button class="register-client-button">
+        <button class="register-client-button"
+                (click)="openClient()">
             <mat-icon class="add-icon">add</mat-icon>
             Agregar
         </button>
@@ -80,17 +81,123 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let clients of clients">
-                        <td>{{ 'N/A' }}</td>
+                        <td><img [src]="client?.foto" *ngIf="client?.foto"></td>
                         <td>{{ clients.nip }}</td>
                         <td>{{ clients.nombre_Completo }}</td>
                         <td>{{ clients.celular }}</td>
                         <td>{{ clients.membresia }}</td>
                         <td>{{ clients.fecha_Inicio }}</td>
                         <td>{{ clients.fecha_Fin }}</td>
-                        <td>{{ '' }}</td>
+                        <td>
+                            <div class="buton-action-container">
+                                <button class="assign-membership-button"
+                                        type="button" 
+                                        (click)="null">
+                                    <span class="assign-membership-text">Asignar membresía</span>
+                                </button>
+                                <button class="modify-button"
+                                        type="button" 
+                                        (click)="null">
+                                    <mat-icon></mat-icon>
+                                </button>
+                                <button class="delete-button"
+                                        type="button" 
+                                        (click)="null">
+                                    <mat-icon></mat-icon>
+                                </button>
+                            </div> 
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- modal client -->
+    <div class="modal-overlay" *ngIf="newClient" (click)="openClient()">
+        <!-- modal -->
+        <div class="modal-container">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <span class="modal-title">Agregar nuevo cliente</span>
+                <div class="form-container">
+                    <form [formGroup]="clientForm" 
+                          (ngSubmit)="saveClientData()">
+                        <div class="form-row">
+                            <div class="form-column"> 
+                                <div class="form-row">
+                                    <div class="form-full-name">
+                                        <span class="form-full-name-title">Nombre completo *</span>
+                                        <input formControlName="nombre_Completo"
+                                               [class.input-error]="clientForm.get('nombre_Completo')?.invalid && clientForm.get('nombre_Completo')?.touched">
+                                        <small *ngIf="clientForm.get('nombre_Completo')?.invalid && clientForm.get('nombre_Completo')?.touched" class="text-danger">
+                                          Nombre requerido
+                                        </small>
+                                    </div>
+                                    <div class="form-phone">
+                                        <span class="form-phone-title">Celular *</span>
+                                        <input formControlName="celular"
+                                               [class.input-error]="clientForm.get('celular')?.invalid && clientForm.get('celular')?.touched">
+                                        <small *ngIf="clientForm.get('celular')?.invalid && clientForm.get('celular')?.touched" class="text-danger">
+                                          Celular requerido (10 dígitos)
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-observation">
+                                    <span class="form-observation-title">Observación</span>
+                                    <textarea formControlName="observacion"></textarea>
+                                </div>
+                                <div class="form-branch">
+                                    <span class="form-branch-title">Sucursal *</span>
+                                    <select formControlName="sucursal_Id"
+                                            [class.input-error]="clientForm.get('sucursal_Id')?.invalid && clientForm.get('sucursal_Id')?.touched">
+                                      <option value="">Seleccionar sucursal</option>
+                                      <option *ngFor="let branch of branch" [value]="branch.sucursal_Id">
+                                        {{ branch.ubicacion }}
+                                      </option>
+                                    </select>
+                                    <small *ngIf="clientForm.get('sucursal_Id')?.invalid && clientForm.get('sucursal_Id')?.touched" class="text-danger">
+                                      Sucursal requerida
+                                    </small>
+                                </div>
+                                <div class="form-checkbox">
+                                    <input class="form-checkbox-input"
+                                           type="checkbox"
+                                           name="haveUsername"
+                                           (click)="checkboxHaveUsername()">
+                                    <span class="form-checkbox-text">¿Cuenta con usuario?</span>                    
+                                </div>
+                                <div class="form-username"
+                                     *ngIf="haveUsername">
+                                    <span class="form-username-title">Nombre de usuario *</span>
+                                    <input class="form-username-input">
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="form-column">
+                                <!-- <div class="photo-container">
+                                    <span class="form-photo-title">Foto</span>
+                                    <input type="file" 
+                                           (change)="onFileSelected($event)" 
+                                           accept="image/*"
+                                           name="foto">
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button class="add-button"
+                                    type="submit" 
+                                    [disabled]="!clientForm.valid">
+                                <span class="add-text">{{ updateClientNIP ? 'Actualizar' : 'Agregar' }}</span>
+                            </button>
+                            <button class="cancel-button"
+                                    type="button" 
+                                    (click)="openClient()">
+                                <span class="cancel-text">Cancelar</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

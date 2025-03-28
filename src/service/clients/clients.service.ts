@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 
 // models
 import { Clients } from '../../model/clients/clients.model';
+import { NewClient } from '../../model/clients/new-client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,12 @@ export class ClientsService {
   }
 
   // get 'Consultar-Cliente-Por-NIP'
-  getGetClientByNIP(nip: string | null): Observable<Clients> {
+  getClientByNIP(nip: string | null): Observable<Clients> {
     return this.http.get<Clients>(`${this.url}/ConsultarClientePorNIP?NIP=${nip}`)
+  }
+
+  // post 'Registrar-Cliente'
+  postRegisterClient(formData: FormData): Observable<Clients> {
+    return this.http.post<Clients>(`${this.url}/RegistrarCliente`, formData)
   }
 }
