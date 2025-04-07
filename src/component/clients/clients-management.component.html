@@ -1,7 +1,7 @@
 <div class="container">
     <!-- route -->
     <span class="route">
-        <a [routerLink]="['']">Iron Revolution Center</a> / <a [routerLink]="['/clients-management']">Clientes</a>
+        <a>Iron Revolution Center</a> / <a [routerLink]="['/clients-management']">Clientes</a>
     </span>
 
     <!-- container -->
@@ -92,18 +92,18 @@
                             <div class="buton-action-container">
                                 <button class="assign-membership-button"
                                         type="button" 
-                                        (click)="null">
+                                        (click)="openAssignMembership(clients)">
                                     <span class="assign-membership-text">Asignar membresía</span>
                                 </button>
                                 <button class="modify-button"
                                         type="button" 
-                                        (click)="null">
-                                    <mat-icon></mat-icon>
+                                        (click)="saveUpdateClient(clients)">
+                                    <mat-icon class="modify-icon">create</mat-icon>
                                 </button>
                                 <button class="delete-button"
                                         type="button" 
-                                        (click)="null">
-                                    <mat-icon></mat-icon>
+                                        (click)="deleteDeleteClient(clients.nip)">
+                                    <mat-icon class="delete-icon">delete</mat-icon>
                                 </button>
                             </div> 
                         </td>
@@ -127,7 +127,8 @@
                                 <div class="form-row">
                                     <div class="form-full-name">
                                         <span class="form-full-name-title">Nombre completo *</span>
-                                        <input formControlName="nombre_Completo"
+                                        <input class="form-full-name-input" 
+                                               formControlName="nombre_Completo"
                                                [class.input-error]="clientForm.get('nombre_Completo')?.invalid && clientForm.get('nombre_Completo')?.touched">
                                         <small *ngIf="clientForm.get('nombre_Completo')?.invalid && clientForm.get('nombre_Completo')?.touched" class="text-danger">
                                           Nombre requerido
@@ -135,7 +136,8 @@
                                     </div>
                                     <div class="form-phone">
                                         <span class="form-phone-title">Celular *</span>
-                                        <input formControlName="celular"
+                                        <input class="form-phone-input"
+                                               formControlName="celular"
                                                [class.input-error]="clientForm.get('celular')?.invalid && clientForm.get('celular')?.touched">
                                         <small *ngIf="clientForm.get('celular')?.invalid && clientForm.get('celular')?.touched" class="text-danger">
                                           Celular requerido (10 dígitos)
@@ -144,7 +146,8 @@
                                 </div>
                                 <div class="form-observation">
                                     <span class="form-observation-title">Observación</span>
-                                    <textarea formControlName="observacion"></textarea>
+                                    <textarea class="form-observation-textarea"
+                                              formControlName="observacion"></textarea>
                                 </div>
                                 <div class="form-branch">
                                     <span class="form-branch-title">Sucursal *</span>
@@ -163,13 +166,18 @@
                                     <input class="form-checkbox-input"
                                            type="checkbox"
                                            name="haveUsername"
+                                           [checked]="haveUsername"
                                            (click)="checkboxHaveUsername()">
                                     <span class="form-checkbox-text">¿Cuenta con usuario?</span>                    
                                 </div>
                                 <div class="form-username"
                                      *ngIf="haveUsername">
                                     <span class="form-username-title">Nombre de usuario *</span>
-                                    <input class="form-username-input">
+                                    <input class="form-username-input"
+                                           formControlName="usuario">
+                                    <small *ngIf="clientForm.get('usuario')?.invalid && clientForm.get('usuario')?.touched" class="text-danger">
+                                        Usuario requerido
+                                    </small>
                                 </div>
                             </div>
                             <div class="divider"></div>
@@ -197,6 +205,59 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal assign -->
+    <div class="modal-overlay" *ngIf="isAssignMembership" (click)="openAssignMembershipModal()">
+        <!-- modal -->
+        <div class="form-container">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <span class="modal-title">Asignar membresía</span>
+                <form [formGroup]="assignMembershipForm">
+                    <div class="form-row">
+                        <div class="list-memberships">
+                            <span class="form-membership-title">Membresía *</span>
+                            <select formControlName="membershipId"
+                                    [class.input-error]="assignMembershipForm.get('membershipId')?.invalid && assignMembershipForm.get('membershipId')?.touched">
+                                <option value="">Seleccionar membresía</option>
+                                <option *ngFor="let membership of membership" 
+                                        [value]="membership.membresia_Id">
+                                        {{ membership.nombre }} ({{ membership.duracion }} días)
+                                </option>
+                            </select>
+                            <small *ngIf="assignMembershipForm.get('membershipId')?.invalid && assignMembershipForm.get('membershipId')?.touched" class="text-danger">
+                                Membresía requerida
+                            </small>
+                        </div>
+                        <div class="membership-days">
+                            <div class="row-start-tex">
+                                <span class="form-date-title">Fecha de inicio</span>
+                                <input type="date" 
+                                       formControlName="startDate">
+                            </div>
+                            <div class="row-end-tex">
+                                <span class="form-date-title">Fecha de fin</span>
+                                <input type="date" 
+                                       formControlName="endDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button class="add-button"
+                                type="button" 
+                                (click)="assignMembership()"
+                                [disabled]="!assignMembershipForm.valid">
+                            <span class="add-text">Asignar</span>
+                        </button>
+                        <button class="cancel-button"
+                                type="button" 
+                                (click)="openAssignMembershipModal()">
+                            <span class="cancel-text">Cancelar</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

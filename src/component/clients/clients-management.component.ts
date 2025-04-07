@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, FormBuilder, ReactiveFormsModule ,Validators } from '@angular/forms';
+import { FormGroup, FormsModule, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -14,6 +14,7 @@ import { NewClient } from '../../model/clients/new-client.model';
 import { MembershipsService } from '../../service/memberships/memberships.service';
 import { BranchesService } from '../../service/branches/branches.service';
 import { ClientsService } from '../../service/clients/clients.service';
+import { UsersService } from '../../service/users/users.service';
 
 @Component({
   selector: 'app-clients-management',
@@ -51,6 +52,10 @@ export class ClientsManagementComponent implements OnInit {
   // client nip for update
   updateClientNIP: string | null = null;
 
+  // assign membership
+  isAssignMembership: boolean = false;
+  assignMembershipForm!: FormGroup; 
+
   // start and end date
   selectStartDay!: string;
   selectEndDay!: string;
@@ -61,6 +66,7 @@ export class ClientsManagementComponent implements OnInit {
     private membershipsService: MembershipsService,
     private branchService: BranchesService,
     private clientsService: ClientsService,
+    private usersService: UsersService,
 
     // form
     private fb: FormBuilder,
@@ -84,8 +90,9 @@ export class ClientsManagementComponent implements OnInit {
       foto: [null],
       nombre_Completo: ['', Validators.required],
       celular: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      observacion: [''],
-      sucursal_Id: ['', Validators.required] 
+      observacion: [null],
+      sucursal_Id: ['', Validators.required],
+      usuario: [{value: null, disabled: true}]
     });
 
     // table
@@ -97,6 +104,53 @@ export class ClientsManagementComponent implements OnInit {
     this.getListClients(this.selectMembershipId, this.selectStartDay, this.selectEndDay);
   }
 
+  openAssignMembershipModal() {
+    this.isAssignMembership = !this.isAssignMembership;
+  }
+  
+  openAssignMembership(client: Clients) {
+    this.isAssignMembership = !this.isAssignMembership;
+    this.updateClientNIP = client.nip;
+
+    const today = new Date();
+    const startDate = this.formatDate(today);
+
+    this.assignMembershipForm = this.fb.group({
+      membershipId: ['', Validators.required],
+      startDate: [{value: startDate, disabled: true}],
+      endDate: [{value: '', disabled: true}] 
+    });
+
+    this.assignMembershipForm.get('membershipId')?.valueChanges.subscribe(membershipId => {
+      const selectedMembership = this.membership.find(m => m.membresia_Id === membershipId);
+      if (selectedMembership) {
+        const endDate = new Date(today);
+        endDate.setDate(today.getDate() + selectedMembership.duracion);
+        this.assignMembershipForm.get('endDate')?.setValue(this.formatDate(endDate));
+      }
+    });
+  }
+
+  assignMembership() {
+    if (this.assignMembershipForm.valid && this.updateClientNIP) {
+      const membershipId = this.assignMembershipForm.get('membershipId')?.value;
+      const endDay = this.assignMembershipForm.get('endDate')?.value;
+
+      this.membershipsService.putAssignMembership(this.updateClientNIP, membershipId).subscribe({
+        next: (data) => {
+          console.log('Membresía asignada:', data);
+          this.isAssignMembership = false;
+          this.updateClientNIP = null;
+          this.getListClients(this.selectMembershipId, this.selectStartDay, endDay);
+        },
+        error: (err) => {
+          alert(err.error?.message || 'Error al asignar membresía');
+          console.error('Error al asignar membresía:', err);
+        }
+      });
+    }    
+  }
+
   // open modal client
   openClient() {
     this.newClient = !this.newClient;
@@ -104,9 +158,23 @@ export class ClientsManagementComponent implements OnInit {
     this.updateClientNIP = null;
   }
 
-  // open modal client
   checkboxHaveUsername() {
     this.haveUsername = !this.haveUsername;
+    const user = this.clientForm.get('usuario');
+    
+    if (!user) {
+      alert('Ingresar usuario'); return;
+    }
+
+    if (this.haveUsername) {
+      user.setValidators([Validators.required]);
+      user.enable();
+    } else {
+      user.clearValidators();
+      user.setValue(null);
+      user.disable();
+    }
+    user.updateValueAndValidity();
   }
 
   // foto selected
@@ -126,7 +194,7 @@ export class ClientsManagementComponent implements OnInit {
 
   // get memberships
   getListMemberships() {
-    this.membershipsService.getListMemberships().subscribe({
+    this.membershipsService.loadMemberships().subscribe({
       next: (data) => {
         console.log('Datos recibidos: ', data);
         this.membership = data;
@@ -201,6 +269,7 @@ export class ClientsManagementComponent implements OnInit {
         this.clients = data ? [data] : [];
       }, 
       error: (err) => {
+        alert(err.error?.message || 'Error al obtener cliente.');
         console.error('Error al obtener cliente: ', err)
       }
     })
@@ -210,11 +279,55 @@ export class ClientsManagementComponent implements OnInit {
     this.clientsService.postRegisterClient(formData).subscribe ({
       next: (data) => {
         console.log('Datos recibidos: ', data);
+        if (this.haveUsername == true) {
+          const usuario = this.clientForm.get('usuario')?.value;
+          this.putAssignNIP(data.nip, usuario);
+        }
         this.getClientByNIP(data.nip);
         this.openClient();
       },
       error: (err) => {
+        alert(err.error?.message || 'Error al registrar cliente.');
         console.error('Error al insertar cliente: ', err);
+      }
+    })
+  }
+
+  putAssignNIP(nip: string, userName: string) {
+    this.usersService.putAssignNIP(nip, userName).subscribe ({
+      error: (err) => {
+        alert(err.error?.message || 'Error al asignar NIP.');
+        console.error('Error al asignar NIP: ', err);
+      }
+    })
+  }
+
+  putModifyClient(clientNIP: string, formData: FormData) {
+    this.clientsService.putModifyClient(clientNIP, formData).subscribe ({
+      next: (data) => {
+        console.log('Datos recibidos: ', data);
+        if (this.haveUsername == true) {
+          const usuario = this.clientForm.get('usuario')?.value;
+          this.putAssignNIP(data.nip, usuario);
+        }
+        this.getClientByNIP(data.nip);
+        this.openClient();
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Error al modificar cliente.');
+        console.error('Error al modificar cliente: ', err);
+      }
+    })
+  }
+
+  deleteDeleteClient(clientNIP: string) {
+    this.clientsService.deleteDeleteClient(clientNIP).subscribe ({
+      next: (data) => {
+        console.log('Datos recibidos: ', data);
+        this.getListClients(this.selectMembershipId, this.selectStartDay, this.selectEndDay);
+      },
+      error: (err) => {
+        console.error('Error al eliminar cliente: ', err);
       }
     })
   }
@@ -223,22 +336,35 @@ export class ClientsManagementComponent implements OnInit {
     if (this.clientForm.valid) {
       const formValues = this.clientForm.value;
       if (this.updateClientNIP != null) {
+        this.putModifyClient(this.updateClientNIP, formValues);
       } else {
-        this.postRegisterClient(formValues)
+        this.postRegisterClient(formValues);
       }
     }
   }
 
   saveUpdateClient(client: Clients) {
     this.updateClientNIP = client.nip;
+
+    this.clientForm.reset();
     this.clientForm.patchValue({
       foto: client.foto,
       nombre_Completo: client.nombre_Completo,
       celular: client.celular,
       observacion: client.observacion,
-      branch: client.sucursal.sucursal_Id
+      sucursal_Id: client.sucursal.sucursal_Id
     });
-    this.openClient();
+
+    if (this.haveUsername) {
+      const user = this.clientForm.get('usuario');
+      if (user) {
+        user.enable();
+        user.setValidators([Validators.required]);
+        user.updateValueAndValidity();
+      }
+    }
+
+    this.newClient = true;
   }
 
   // clean filters

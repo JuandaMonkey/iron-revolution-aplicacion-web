@@ -8,9 +8,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
-
   // url
-  private url='';
+  private url='https://localhost:44363/api/Users';
 
   constructor(private http: HttpClient) { }
+
+  // put 'Asignar NIP'
+  putAssignNIP(nip: string, userName: string): Observable<boolean> {
+    return this.http.put<boolean>(`${this.url}/AsignarNIP?NIP=${nip}&userName=${userName}`, {})
+  }
 }

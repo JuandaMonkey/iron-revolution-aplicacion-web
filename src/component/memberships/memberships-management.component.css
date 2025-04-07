@@ -1,0 +1,255 @@
+.route, .route a {
+  color: #606060;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+}
+      
+.route a {
+  cursor: pointer;
+  text-decoration: none;
+}
+    
+.main-container {
+  width: auto;
+  height: auto;
+  padding: 15px 15px 15px 15px;
+  background: #FFFFFF;
+  border-color: #D6D6D6;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px 16px 16px 16px;
+  margin-top: 15px;
+}
+    
+.title {
+  display: flex;
+  align-items: center;
+}
+    
+.container-title {
+  color: #444444;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.28;
+  display: inline-flex;
+  align-items: center;
+}
+    
+.container-icon {
+  width: 30px;
+  height: 30px;
+  color: #444444;
+}
+
+.register-membership-button {
+  display: flex;
+  width: auto;
+  height: auto;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 8px 8px 8px;
+  background: #7EC744;
+  border-color: #FFFFFF00;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 7px 7px 7px 7px;
+  font-family: "Roboto";
+  color: #FFFFFF;
+  margin: 20px 0px 20px 0px;
+}
+
+.add-icon {
+  width: 24px;
+  height: 24px;
+  color: #FFFFFF;
+}  
+
+.table-container {
+  width: 400px;
+  height: auto;
+  padding: 15px 15px 15px 15px;
+  background: #FFFFFF;
+  border-color: #D6D6D6;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-memberships {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table-memberships thead {
+  font-weight: bold;
+}
+
+.table-memberships  tbody tr:nth-child(even) {
+  background-color: #F8F8F8;
+}
+
+.table-memberships th,
+.table-memberships td {
+    padding: 12px;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.buton-action-container {
+  display: flex; 
+  flex-direction: row;
+}
+
+.modify-button,
+.delete-button {
+  display: flex;
+  width: auto;
+  height: 33px;
+  padding: 4px 4px 4px 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 7px 7px 7px 7px;
+  align-items: center;
+}
+
+.modify-button {
+  background: #C7A244;
+  border-color: #FFFFFF00;
+  margin: 0px 5px 0px 5px;
+}
+
+.delete-button {
+  background: #C74444;
+  border-color: #FFFFFF00;
+}
+
+.modify-icon,
+.delete-icon {
+  width: 24px;
+  height: 24px;
+  color: #FFFFFF;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  width: auto;
+  align-items: flex-start;
+}
+
+.modal-content {
+  display: flex;
+  padding: 20px 20px 20px 20px;
+  background: #FFFFFF;
+  border-color: #D6D6D6;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px 16px 16px 16px; 
+  height: auto; 
+}
+
+.modal-title {
+  color: #444444;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+}
+
+.form-name,
+.form-duration {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-title {
+  color: #444444;
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.form-input {
+  padding: 6px 8px 6px 8px;
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #D6D6D6;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 3px 3px 3px 3px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.input-error {
+  border: 1px solid red;
+  background-color: #ffcccc;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.buton-action-container {
+  margin-top: 20px;
+  display: flex; 
+  flex-direction: row;
+}
+
+.add-button,
+.cancel-button {
+  width: auto;
+  height: auto;
+  padding: 0px 10px 1px 10px;
+  border-radius: 3px 3px 3px 3px;
+  text-align: center;
+  border: none;
+  width: 130px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.add-button {
+  background: #444444;
+}
+.cancel-button {
+  background: #EBEBEB;
+  margin-left: 10px;
+}
+
+.add-text,
+.cancel-text {
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.add-text{
+  color: #FFFFFF;
+}
+
+.cancel-text {
+  color: #444444;
+}

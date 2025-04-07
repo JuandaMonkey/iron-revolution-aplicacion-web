@@ -1,1 +1,37 @@
-<label>juanadaa</label>
+<div class="container">
+    <div class="login-container">
+        <div class="login-left">
+            <span class="title-text">Iron Revolution Center</span>
+        </div>
+        <div class="login-right">
+            <span class="login-text">Login</span>
+            <div class="container-form">
+                <form [formGroup]="login"
+                      (ngSubmit)="authentication()">
+                    <div class="container-userName">
+                        <span class="form-text">Nombre de usuario *</span>
+                        <input class="form-input" 
+                               formControlName="nombre_Usuario">
+                        <small *ngIf="login.get('nombre_Usuario')?.invalid && login.get('nombre_Usuario')?.touched" class="text-danger">
+                            Usuario requerido
+                        </small>
+                    </div>
+                    <div class="container-password">
+                        <span class="form-text">Contraseña *</span>
+                        <input class="form-input"
+                               type="password"
+                               formControlName="contraseña">
+                        <small *ngIf="login.get('contraseña')?.invalid && login.get('contraseña')?.touched" class="text-danger">
+                            Contraseña requerida
+                        </small>
+                    </div>
+
+                    <button class="login-button"
+                            type="submit">
+                        Iniciar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

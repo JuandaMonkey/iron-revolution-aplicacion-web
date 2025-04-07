@@ -52,34 +52,20 @@
   margin-top: 10px;
 }
 
-.list-memberships,
-.select-days {
+.list-memberships{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.select-days {
-  margin-left: 10px;
-}
-
-.membership,
-.date,
-.medium {
+.membership {
   color: #606060;
   font-family: "Roboto";
   font-weight: bold;
   font-size: 16px;
 }
 
-.medium {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.memberships,
-.start-day,
-.end-day {
+.memberships {
   height: 33px;
   background: #FFFFFF;
   border: 1px solid #000000;
@@ -88,9 +74,46 @@
   font-family: "Roboto";
 }
 
+.select-days {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: 10px;
+}
+
+.date {
+  color: #606060;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.medium {
+  color: #606060;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.medium {
+  color: #606060;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 5px;
+}
+
 .start-day,
 .end-day {
-  text-align: center;
+  height: 33px;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 1px;
+  color: #606060;
+  font-family: "Roboto";
+  padding: 5px;
+  box-sizing: border-box;
+  width: auto;
 }
 
 .search-bar {
@@ -110,28 +133,32 @@
   display: flex;
   height: 33px;
   align-items: center;
-  gap: 5px;
+  padding: 5px 10px;
   background: #FFFFFF;
   color: #606060;
-  border: 1px solid #000000;
+  border-color: 1px solid #000000;
   border-radius: 1px;
   font-family: "Roboto";
   font-weight: 400;
   font-size: 14px;
-  padding: 5px 10px;
   cursor: pointer;
-  margin-top: 25px;
   margin-left: 10px;
+  margin-top: 23px;
 }
   
-.cleaning-service-icon, .apply-filters-icon {
-  font-size: 18px;
+.cleaning-service-icon {
+  width: 20px;
+  height: 20px;
   color: #929292;
+  margin-right: 10px;
 }
 
 .apply-filters-icon {
-  margin-top: 30px;
+  width: 25px;
+  height: 25px;
   margin-left: 10px;
+  margin-top: 22px;
+  color: #606060;
 }
 
 .register-client-button {
@@ -206,8 +233,8 @@
   display: flex;
   justify-content: center;
   margin-top: 25px;
-  height: 320px;
   width: auto;
+  align-items: flex-start;
 }
 
 .modal-content {
@@ -218,7 +245,7 @@
   border-width: 1px;
   border-style: solid;
   border-radius: 16px 16px 16px 16px; 
-  height: 420px; 
+  height: auto; 
 }
 
 .modal-title,
@@ -317,7 +344,11 @@
   border-radius: 3px 3px 3px 3px;
   font-family: "Roboto";
   font-weight: 400;
-  font-size: 18px;
+  font-size: 15px;
+}
+
+.form-observation-textarea {
+  max-height: 100px;
 }
 
 .divider {
@@ -383,6 +414,74 @@
 }
 
 .buton-action-container {
-  display: flex;
+  display: flex; 
   flex-direction: row;
+}
+
+.assign-membership-button,
+.modify-button,
+.delete-button {
+  display: flex;
+  width: auto;
+  height: 33px;
+  padding: 4px 4px 4px 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 7px 7px 7px 7px;
+  align-items: center;
+}
+
+.assign-membership-button {
+  background: #C78344;
+  border-color: #FFFFFF00;
+}
+
+.modify-button {
+  background: #C7A244;
+  border-color: #FFFFFF00;
+  margin: 0px 5px 0px 5px;
+}
+
+.delete-button {
+  background: #C74444;
+  border-color: #FFFFFF00;
+}
+
+.assign-membership-text {
+  color: #FFFFFF;
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.modify-icon,
+.delete-icon {
+  width: 24px;
+  height: 24px;
+  color: #FFFFFF;
+}
+
+.row-start-tex,
+.row-end-tex {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  width: 120px;
+}
+
+.membership-text,
+.start-text,
+.end-text {
+  color: #444444;
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.membership-start,
+.membership-end {
+  height: 33px;
 }

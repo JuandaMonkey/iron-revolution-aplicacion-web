@@ -1,6 +1,6 @@
 <main>
   <!-- sidebar -->
-  <div class="sidebar-container">
+  <div class="sidebar-container" *ngIf="router.url !== '/login'">
     <div class="sidebar">
       <div class="sidebar-header" [class.collapsed]="!isOpen">
         <mat-icon class="sidebar-toggle-icon" (click)="toggleSidebar()">
@@ -42,19 +42,19 @@
                 <span *ngIf="isOpen" class="sidebar-text">Ejercicios</span>
               </a>
             </li>
-            <li>
+            <li *ngIf="isAdmin">
               <a [routerLink]="['/employees-management']">
                 <mat-icon class="sidebar-icon">badge</mat-icon>
                 <span *ngIf="isOpen" class="sidebar-text">Empleados</span>
               </a>
             </li>
-            <li>
+            <li *ngIf="isAdmin">
               <a [routerLink]="['/branches-management']">
                 <mat-icon class="sidebar-icon">business</mat-icon>
                 <span *ngIf="isOpen" class="sidebar-text">Sucursales</span>
               </a>
             </li>
-            <li>
+            <li *ngIf="isAdmin">
               <a [routerLink]="['/users-management']">
                 <mat-icon class="sidebar-icon">lock</mat-icon>
                 <span *ngIf="isOpen" class="sidebar-text">Usuarios</span>
@@ -69,13 +69,15 @@
   <!-- main content area -->
   <div class="main-container">
     <!-- header -->
-    <div class="header" [class.collapsed]="!isOpen">
+    <div class="header" [class.collapsed]="!isOpen" *ngIf="router.url !== '/login'">
       <span *ngIf="!isOpen" class="header-title">Iron Revolution Center</span>
+      <button (click)="logout()">Cerrar sesión</button>
+      
 
       <div class="user-session">
         <div class="user-info">
-          <span class="user-session-full-name">Nombre_Completo</span>
-          <span class="user-session-nip">NIP</span>
+          <span class="user-session-full-name">{{ user?.nombre_Usuario ?? '' }}</span>
+          <span class="user-session-nip">{{ user?.nip ?? '' }}</span>
         </div>
         <img class="user-session-photo">
       </div>

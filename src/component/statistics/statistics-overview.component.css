@@ -97,28 +97,32 @@
   display: flex;
   height: 33px;
   align-items: center;
-  gap: 5px;
+  padding: 5px 10px;
   background: #FFFFFF;
   color: #606060;
-  border: 1px solid #000000;
+  border-color: 1px solid #000000;
   border-radius: 1px;
   font-family: "Roboto";
   font-weight: 400;
   font-size: 14px;
-  padding: 5px 10px;
   cursor: pointer;
-  margin-top: 25px;
   margin-left: 10px;
+  margin-top: 23px;
 }
 
-.cleaning-service-icon, .apply-filters-icon {
-  font-size: 18px;
+.cleaning-service-icon {
+  width: 20px;
+  height: 20px;
   color: #929292;
+  margin-right: 10px;
 }
 
 .apply-filters-icon {
-  margin-top: 30px;
+  width: 25px;
+  height: 25px;
   margin-left: 10px;
+  margin-top: 22px;
+  color: #606060;
 }
 
 .card-container {

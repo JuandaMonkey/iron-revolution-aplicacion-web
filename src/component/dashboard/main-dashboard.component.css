@@ -71,6 +71,7 @@
   border: 1px solid #000000;
   border-radius: 1px;
   -webkit-text-fill-color: #606060;
+  font-family: "Roboto";
 }
 
 option {
@@ -188,6 +189,8 @@ option {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
+  justify-content: start;
+  width: fit-content;
 }
 
 .preferences-container, 
@@ -197,6 +200,14 @@ option {
   background: #FFFFFF;
   border: 1px solid #D6D6D6;
   border-radius: 16px;
+}
+
+.preferences-container {
+  width: 600px;
+}
+
+.most-popular-container {
+  width: 300px;
 }
 
 .chart-preferences, 

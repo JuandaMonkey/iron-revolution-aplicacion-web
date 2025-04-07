@@ -1,1 +1,102 @@
-<p>memberships-management works!</p>
+<div class="container">
+    <!-- route -->
+    <span class="route">
+        <a>Iron Revolution Center</a> / <a [routerLink]="['/memberships-management']">Membresías</a>
+    </span>
+
+    <!-- container -->
+    <div class="main-container">
+        <!-- title -->
+        <div class="title">
+            <span class="container-title"><mat-icon class="container-icon">calendar_today</mat-icon>Membresías</span>
+        </div>
+
+        <button class="register-membership-button"
+                (click)="openNewMembership()">
+            <mat-icon class="add-icon">add</mat-icon>
+            Agregar
+        </button>
+
+        <!-- table -->
+        <div class="table-container">
+            <table class="table-memberships">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Duración</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let membership of membershipsList">
+                        <td>{{ membership.nombre }}</td>
+                        <td>{{ membership.duracion }}</td>
+                        <td>
+                            <div class="buton-action-container">
+                                <button class="modify-button"
+                                        type="button" 
+                                        (click)="modifyMembershipData(membership)">
+                                    <mat-icon class="modify-icon">create</mat-icon>
+                                </button>
+                                <button class="delete-button"
+                                        type="button" 
+                                        (click)="deleteMembership(membership.membresia_Id)">
+                                    <mat-icon class="delete-icon">delete</mat-icon>
+                                </button>
+                            </div> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- modal client -->
+    <div class="modal-overlay" *ngIf="isNewMembership" (click)="openNewMembership()">
+        <!-- modal -->
+        <div class="modal-container">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <span class="modal-title">Agregar nueva membresía</span>
+                <div class="form-container">
+                    <form [formGroup]="membershipForm"
+                          (ngSubmit)="saveMembership()">
+                        <div class="form-row">
+                            <div class="form-column"> 
+                                <div class="form-row">
+                                    <div class="form-name">
+                                        <span class="form-title">Nombre *</span>
+                                        <input class="form-input" 
+                                               formControlName="nombre">
+                                        <small *ngIf="membershipForm.get('nombre')?.invalid && membershipForm.get('nombre')?.touched" class="text-danger">
+                                          Nombre requerido
+                                        </small>
+                                    </div>
+                                    <div class="form-duration">
+                                        <span class="form-title">Duración *</span>
+                                        <input class="form-input"  
+                                               formControlName="duracion">
+                                        <small *ngIf="membershipForm.get('duracion')?.invalid && membershipForm.get('duracion')?.touched" class="text-danger">
+                                          Duración requerida (mínimo 1 día)
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>  
+                        <div class="buton-action-container">
+                            <button class="add-button"
+                                    type="submit" 
+                                    [disabled]="!membershipForm.valid">
+                                <span class="add-text">{{ selectedMembershipId ? 'Actualizar' : 'Agregar' }}</span>
+                            </button>
+                            <button class="cancel-button"
+                                    type="button" 
+                                    (click)="openNewMembership()">
+                                <span class="cancel-text">Cancelar</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

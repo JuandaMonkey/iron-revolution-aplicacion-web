@@ -1,7 +1,7 @@
 <div class="container">
     <!-- route -->
     <span class="route">
-        <a [routerLink]="['']">Iron Revolution Center</a> / <a [routerLink]="['/main-dashboard']">Dashboard</a>
+        <a>Iron Revolution Center</a> / <a [routerLink]="['/main-dashboard']">Dashboard</a>
     </span>
 
     <!-- title -->
@@ -37,21 +37,21 @@
             <div class="card clients-registered">
                 <span class="title">Clientes</span>
                 <span class="subtitle">Clientes registrados</span>
-                <span class="count">{{ dashboard?.clientes_Registrados ?? 0 }} </span>
+                <span class="count">{{ registered_Employees.registered_Employees }} </span>
             </div>
             <div class="card clients-active">
                 <span class="title">Clientes</span>
                 <span class="subtitle">Clientes activos en la sucursal</span>
-                <span class="count">{{ dashboard?.clientes_Activos ?? 0 }}</span>
+                <span class="count">{{ active_Clients.active_Clients }}</span>
             </div>
             <div class="card employees-registered">
                 <span class="title">Empleados</span>
                 <span class="subtitle">Empleados registrados</span>
-                <span class="count">{{ dashboard?.empleados_Registrados ?? 0 }}</span>
+                <span class="count">{{ registered_Employees.registered_Employees }}</span>
             </div>
             <div class="card most-frequent">
-                <span class="title">Más frecuentado</span>
-                <span class="location">{{ dashboard?.sucursal_Mas_Frecuentada ?? 'N/A' }}</span>
+                <span class="title">@if (selectBranchId) { {{ most_Frecuented_Branch.ubicacion }} } @else { Más frecuentado }</span>
+                <span class="location">@if (selectBranchId) { {{ most_Frecuented_Branch.conteo }} } @else { {{ most_Frecuented_Branch.ubicacion }}, {{ most_Frecuented_Branch.conteo }} }</span>
                 <mat-icon class="icon-most-frequent">people</mat-icon>
             </div>
         </div>

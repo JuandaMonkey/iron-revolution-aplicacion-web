@@ -1,1 +1,133 @@
-<p>exercises-management works!</p>
+<div class="container">
+    <!-- route -->
+    <span class="route">
+        <a>Iron Revolution Center</a> / <a [routerLink]="['/exercises-management']">Ejercicios</a>
+    </span>
+
+    <!-- container -->
+    <div class="main-container">
+        <!-- title -->
+        <div class="title">
+            <span class="container-title"><mat-icon class="container-icon">fitness_center</mat-icon>Ejercicios</span>
+        </div>
+
+        <!-- filters -->
+        <div class="filter-container">
+            <div class="list-types">
+                <span class="type">Tipo</span>
+                <select class="types" 
+                        [(ngModel)]="selectedExercisesId" 
+                        name="type"
+                        (ngModelChange)="onChange()">
+                    <option value="">Todos</option>
+                    <option value="Espalda">Espalda</option>
+                    <option value="Pecho">Pecho</option>
+                    <option value="Bicep">Bicep</option>  
+                    <option value="Tricep">Tricep</option>
+                    <option value="Pierna">Pierna</option>              
+                </select>
+            </div>
+            <button class="clean-button" 
+                    (click)="cleanFilters()">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+                Limpiar
+            </button>
+            <mat-icon class="apply-filters-icon">tune</mat-icon>
+        </div>
+
+        <button class="register-exercises-button"
+                (click)="null">
+            <mat-icon class="add-icon">add</mat-icon>
+            Agregar
+        </button>
+
+        <!-- table -->
+        <div class="table-container">
+            <table class="table-exercises">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Descripcion</th>
+                        <th>Series</th>
+                        <th>Repeticiones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let exercise of exercisesList">
+                        <td>{{ exercise.foto }}</td>
+                        <td>{{ exercise.nombre }}</td>
+                        <td>{{ exercise.tipo }}</td>
+                        <td>{{ exercise.descripcion }}</td>
+                        <td>{{ exercise.series }}</td>
+                        <td>{{ exercise.repeticiones }}</td>
+                        <td>
+                            <div class="buton-action-container">
+                                <button class="modify-button"
+                                        type="button" 
+                                        (click)="null">
+                                    <mat-icon class="modify-icon">create</mat-icon>
+                                </button>
+                                <button class="delete-button"
+                                        type="button" 
+                                        (click)="null">
+                                    <mat-icon class="delete-icon">delete</mat-icon>
+                                </button>
+                            </div> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- modal client -->
+    <div class="modal-overlay" *ngIf="" (click)="null">
+        <!-- modal -->
+        <div class="modal-container">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <span class="modal-title">Agregar nuevo ejercicio</span>
+                <div class="form-container">
+                    <form [formGroup]="exercisesForm"
+                          (ngSubmit)="null">
+                        <div class="form-row">
+                            <div class="form-column"> 
+                                <div class="form-row">
+                                    <div class="form-name">
+                                        <span class="form-title">Nombre *</span>
+                                        <input class="form-input" 
+                                               formControlName="nombre">
+                                        <small *ngIf="exercisesForm.get('nombre')?.invalid && exercisesForm.get('nombre')?.touched" class="text-danger">
+                                          Nombre requerido
+                                        </small>
+                                    </div>
+                                    <div class="form-duration">
+                                        <span class="form-title">Duración *</span>
+                                        <input class="form-input"  
+                                               formControlName="duracion">
+                                        <small *ngIf="exercisesForm.get('duracion')?.invalid && exercisesForm.get('duracion')?.touched" class="text-danger">
+                                          Duración requerida (mínimo 1 día)
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>  
+                        <div class="buton-action-container">
+                            <button class="add-button"
+                                    type="submit" 
+                                    [disabled]="!exercisesForm.valid">
+                                <span class="add-text">{{ selectedExercisesId ? 'Actualizar' : 'Agregar' }}</span>
+                            </button>
+                            <button class="cancel-button"
+                                    type="button" 
+                                    (click)="null">
+                                <span class="cancel-text">Cancelar</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
