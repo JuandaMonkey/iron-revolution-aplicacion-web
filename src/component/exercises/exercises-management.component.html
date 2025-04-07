@@ -16,7 +16,7 @@
             <div class="list-types">
                 <span class="type">Tipo</span>
                 <select class="types" 
-                        [(ngModel)]="selectedExercisesId" 
+                        [(ngModel)]="selectedExerciseType" 
                         name="type"
                         (ngModelChange)="onChange()">
                     <option value="">Todos</option>
@@ -36,7 +36,7 @@
         </div>
 
         <button class="register-exercises-button"
-                (click)="null">
+                (click)="openNewExcercise()">
             <mat-icon class="add-icon">add</mat-icon>
             Agregar
         </button>
@@ -66,12 +66,12 @@
                             <div class="buton-action-container">
                                 <button class="modify-button"
                                         type="button" 
-                                        (click)="null">
+                                        (click)="modifyExerciseData(exercise)">
                                     <mat-icon class="modify-icon">create</mat-icon>
                                 </button>
                                 <button class="delete-button"
                                         type="button" 
-                                        (click)="null">
+                                        (click)="deleteExercise(exercise.ejercicio_Id)">
                                     <mat-icon class="delete-icon">delete</mat-icon>
                                 </button>
                             </div> 
@@ -83,14 +83,14 @@
     </div>
 
     <!-- modal client -->
-    <div class="modal-overlay" *ngIf="" (click)="null">
+    <div class="modal-overlay" *ngIf="isNewExercise" (click)="openNewExcercise()">
         <!-- modal -->
         <div class="modal-container">
             <div class="modal-content" (click)="$event.stopPropagation()">
                 <span class="modal-title">Agregar nuevo ejercicio</span>
                 <div class="form-container">
-                    <form [formGroup]="exercisesForm"
-                          (ngSubmit)="null">
+                    <form [formGroup]="exerciseForm"
+                          (ngSubmit)="saveExercise()">
                         <div class="form-row">
                             <div class="form-column"> 
                                 <div class="form-row">
@@ -98,16 +98,50 @@
                                         <span class="form-title">Nombre *</span>
                                         <input class="form-input" 
                                                formControlName="nombre">
-                                        <small *ngIf="exercisesForm.get('nombre')?.invalid && exercisesForm.get('nombre')?.touched" class="text-danger">
+                                        <small *ngIf="exerciseForm.get('nombre')?.invalid && exerciseForm.get('nombre')?.touched" class="text-danger">
                                           Nombre requerido
                                         </small>
                                     </div>
-                                    <div class="form-duration">
-                                        <span class="form-title">Duración *</span>
-                                        <input class="form-input"  
-                                               formControlName="duracion">
-                                        <small *ngIf="exercisesForm.get('duracion')?.invalid && exercisesForm.get('duracion')?.touched" class="text-danger">
-                                          Duración requerida (mínimo 1 día)
+                                    <div class="form-type">
+                                        <span class="form-title">Tipo *</span>
+                                        <select class="form-select"
+                                                formControlName="tipo">
+                                                <option value="Espalda">Espalda</option>
+                                                <option value="Pecho">Pecho</option>
+                                                <option value="Bicep">Bicep</option>  
+                                                <option value="Tricep">Tricep</option>
+                                                <option value="Pierna">Pierna</option>              
+                                        </select>
+                                        <small *ngIf="exerciseForm.get('tipo')?.invalid && exerciseForm.get('tipo')?.touched" class="text-danger">
+                                          Tipo requerido
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="descripcion">
+                                        <span class="form-title">Descripción *</span>
+                                        <textarea class="form-input" 
+                                               formControlName="descripcion"></textarea>
+                                        <small *ngIf="exerciseForm.get('descripcion')?.invalid && exerciseForm.get('descripcion')?.touched" class="text-danger">
+                                            Descripción requerida
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="series">
+                                        <span class="form-title">Series *</span>
+                                        <input class="form-input" 
+                                               formControlName="series">
+                                        <small *ngIf="exerciseForm.get('series')?.invalid && exerciseForm.get('series')?.touched" class="text-danger">
+                                            Series requerida (mínimo 1 serie)
+                                        </small>
+                                    </div>
+                                    <div class="repeticiones">
+                                        <span class="form-title">Repeticiones *</span>
+                                        <input class="form-input" 
+                                               formControlName="repeticiones">
+                                        <small *ngIf="exerciseForm.get('repeticiones')?.invalid && exerciseForm.get('repeticiones')?.touched" class="text-danger">
+                                            Repeticiones requerida (mínimo 1 serie)
                                         </small>
                                     </div>
                                 </div>
@@ -116,12 +150,12 @@
                         <div class="buton-action-container">
                             <button class="add-button"
                                     type="submit" 
-                                    [disabled]="!exercisesForm.valid">
-                                <span class="add-text">{{ selectedExercisesId ? 'Actualizar' : 'Agregar' }}</span>
+                                    [disabled]="!exerciseForm.valid">
+                                <span class="add-text">{{ selectedExerciseId ? 'Actualizar' : 'Agregar' }}</span>
                             </button>
                             <button class="cancel-button"
                                     type="button" 
-                                    (click)="null">
+                                    (click)="openNewExcercise()">
                                 <span class="cancel-text">Cancelar</span>
                             </button>
                         </div>

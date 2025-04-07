@@ -99,6 +99,18 @@ export class MembershipsManagementComponent implements OnInit {
     });
   }
 
+  // set membership information
+  modifyMembershipData(membership: Memberhips) {
+    this.selectedMembershipId = membership.membresia_Id;
+
+    this.membershipForm.patchValue({
+      nombre: membership.nombre,
+      duracion: membership.duracion
+    });
+
+    this.isNewMembership = true;
+  }
+
   // modify
   modifyMembership(membershipId: string, formData: FormData) {
     this.membershipsService.modifyMembership(membershipId, formData).subscribe ({
@@ -122,17 +134,5 @@ export class MembershipsManagementComponent implements OnInit {
         alert('Error al elimiar membresía.')
       }
     });
-  }
-
-  // set membership information
-  modifyMembershipData(membership: Memberhips) {
-    this.selectedMembershipId = membership.membresia_Id;
-
-    this.membershipForm.patchValue({
-      nombre: membership.nombre,
-      duracion: membership.duracion
-    });
-
-    this.isNewMembership = true;
   }
 }

@@ -25,15 +25,16 @@ import { ExercisesService } from '../../service/exercises/exercises.service';
 export class ExercisesManagementComponent implements OnInit {
   // list of exercises
   exercisesList: Exercises[] = [];
+  selectedExerciseType: string = '';
 
   // status for new exercises
-  isNewExercises: boolean = false;
+  isNewExercise: boolean = false;
 
   // modify exercises
-  selectedExercisesId: string = '';
+  selectedExerciseId: string | null = null;
 
   // exercises form
-  exercisesForm!: FormGroup;
+  exerciseForm!: FormGroup;
 
   constructor (
     // services
@@ -44,39 +45,113 @@ export class ExercisesManagementComponent implements OnInit {
 
   ngOnInit() {
     // form
-    this.exercisesForm = this.fb.group({
+    this.exerciseForm = this.fb.group({
       foto: [null],
       nombre: ['', Validators.required],
       tipo: ['', Validators.required],
       descripcion: ['', Validators.required],
-      series: ['', Validators.required],
-      repeticiones: ['', Validators.required]
+      series: ['', [Validators.required, Validators.min(1)]],
+      repeticiones: ['', [Validators.required, Validators.min(1)]]
     });
 
     // list of exercises
-    this.loadExercises(this.selectedExercisesId);
+    this.loadExercises(this.selectedExerciseType);
   }
 
   onChange() {
-    this.loadExercises(this.selectedExercisesId)
+    this.loadExercises(this.selectedExerciseType);
   }
 
   // get exercises
-  loadExercises(exercisesId: string) {
-    this.exercisesService.loadExercises(exercisesId).subscribe ({
+  loadExercises(exerciseType: string) {
+    this.exercisesService.loadExercises(exerciseType).subscribe ({
       next: (data) => {
         this.exercisesList = data;
       },
       error: (err) => {
         alert('Error al obtener ejercicios.')
       }
+    });
+  }
+
+  // open modal
+  openNewExcercise() {
+    this.isNewExercise = !this.isNewExercise;
+    this.selectedExerciseId = null;
+    this.exerciseForm.reset();
+  }
+
+  // save form information
+  saveExercise() {
+    if(this.exerciseForm.valid) {
+      const formData = this.exerciseForm.value;
+
+      if (this.selectedExerciseId) {
+        this.modifyExercise(this.selectedExerciseId, formData);
+      } else {
+        this.insertExercise(formData);
+      }
+    }
+  }
+
+  // insert
+  insertExercise(exerciseData: FormData) {
+    this.exercisesService.insertExercise(exerciseData).subscribe ({
+      next: (data) => {
+        this.loadExercises(data.tipo);
+        this.openNewExcercise();
+      }, 
+      error: (err) => {
+        alert('Error al insertar ejercicio.');
+      }
+    });
+  }
+
+  // set exercises information
+  modifyExerciseData(exercise: Exercises) {
+    this.selectedExerciseId = exercise.ejercicio_Id;
+
+    this.exerciseForm.patchValue({
+      foto: exercise.foto,
+      nombre: exercise.nombre,
+      tipo: exercise.tipo,
+      descripcion: exercise.descripcion,
+      series: exercise.series,
+      repeticiones: exercise.repeticiones
+    });
+
+    this.isNewExercise = true;
+  }
+
+  // modify
+  modifyExercise(exerciseId: string, exerciseData: FormData) {
+    this.exercisesService.modifyExercise(exerciseId, exerciseData).subscribe ({
+      next: (data) => {
+        this.loadExercises(data.tipo);
+        this.openNewExcercise();
+      },
+      error: (err) => {
+        alert('Error al modificar ejercicio.');
+      }
+    });
+  }
+
+  // delete
+  deleteExercise(exerciseId: string) {
+    this.exercisesService.deleteExercise(exerciseId).subscribe ({
+      next: (data) => {
+        this.loadExercises('');
+      },
+      error: (err) => {
+        alert('Error al eliminar ejercicio.')
+      }
     })
   }
 
   // clean filters
   cleanFilters() {
-    this.selectedExercisesId = '';
+    this.selectedExerciseType = '';
 
-    this.loadExercises(this.selectedExercisesId)
+    this.loadExercises(this.selectedExerciseType)
   }
 }

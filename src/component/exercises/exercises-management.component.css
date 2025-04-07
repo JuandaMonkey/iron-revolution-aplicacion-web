@@ -263,6 +263,30 @@
     font-weight: 400;
     font-size: 15px;
   }
+
+  .form-type {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .descripcion {
+    width: 300px;
+    max-height: 150px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .series,
+  .repeticiones {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .repeticiones {
+    margin-left: 10px;
+  }
   
   .input-error {
     border: 1px solid red;
@@ -271,7 +295,7 @@
   
   .form-row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-top: 10px;
   }
   
