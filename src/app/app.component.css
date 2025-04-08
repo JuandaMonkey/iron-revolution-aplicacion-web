@@ -123,6 +123,11 @@ main {
     background: #FFFFFF;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .logout {
+    display: flex;
+    cursor: pointer;
+  }
   
   .header-title {
     color: #444444;

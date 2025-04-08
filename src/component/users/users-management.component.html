@@ -1,1 +1,303 @@
-<p>users-management works!</p>
+<div class="container">
+    <!-- route -->
+    <span class="route">
+        <a>Iron Revolution Center</a> / <a [routerLink]="['/users-management']">Usuarios</a>
+    </span>
+
+    <!-- container -->
+    <div class="main-container">
+        <!-- title -->
+        <div class="title">
+            <span class="container-title"><mat-icon class="container-icon">lock</mat-icon>Usuarios</span>
+        </div>
+
+        <!-- filters -->
+        <div class="filter-container">
+            <div class="list-roles">
+                <span class="rol">Roles</span>
+                <select class="roles" 
+                        [(ngModel)]="selectedUserRol" 
+                        name="rol"
+                        (ngModelChange)="onChange()">
+                    <option value="">Todos</option>
+                    <option *ngFor="let rol of rolesList" 
+                            [value]="rol.nombre">
+                            {{ rol.nombre }}
+                    </option>                        
+                </select>
+            </div>
+            <input class="search-bar"
+                   placeholder="Buscar"
+                   type="text"
+                   [(ngModel)]="selectedUserName" 
+                   (keyup)="onChange()">
+            <button class="clean-button"
+                    (click)="cleanFilters()">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+                Limpiar
+            </button>
+            <mat-icon class="apply-filters-icon">tune</mat-icon>
+        </div>
+
+        <button class="register-user-button"
+                (click)="openNewUser()">
+            <mat-icon class="add-icon">add</mat-icon>
+            Agregar
+        </button>
+
+        <div class="form-row">
+        <!-- table -->
+        <div class="table-container">
+            <table class="table-users">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                        <th>NIP</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of usersList">
+                        <td>{{ user.nombre_Usuario }}</td>
+                        <td>{{ user.rol }}</td>
+                        <td>{{ user.nip }}</td>
+                        <td>
+                            <div class="buton-action-container">
+                                <button class="details-button"
+                                        type="button" 
+                                        (click)="viewUserDetails(user.nombre_Usuario, user.rol)">
+                                    <mat-icon class="details-icon">person</mat-icon>
+                                </button>
+                                <!-- <button class="modify-button"
+                                        type="button" 
+                                        (click)="modifyUserData(user)">
+                                    <mat-icon class="modify-icon">create</mat-icon>
+                                </button> -->
+                                <button class="delete-button"
+                                        type="button" 
+                                        (click)="deleteUser(user.nombre_Usuario)">
+                                    <mat-icon class="delete-icon">delete</mat-icon>
+                                </button>
+                            </div> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- table -->
+        <div class="table-container-roles">
+            <table class="table-roles">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let rol of rolesList">
+                        <td>{{ rol.nombre }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+        <!-- modal user -->
+        <div class="modal-overlay" *ngIf="isModifyUser" (click)="openModifyUser()">
+            <!-- modal -->
+            <div class="modal-container">
+                <div class="modal-content" (click)="$event.stopPropagation()">
+                    <span class="modal-title">Modificar usuario</span>
+                    <div class="form-container">
+                        <form [formGroup]="userModifyForm"
+                              (ngSubmit)="saveUser()">
+                              <div class="form-column">
+                                <div class="form-user-name">
+                                    <span class="form-title">Usuario *</span>
+                                    <input class="form-input" 
+                                           formControlName="nombre_usuario"
+                                           [class.input-error]="userModifyForm.get('nombre_usuario')?.invalid && userModifyForm.get('nombre_usuario')?.touched">
+                                    <small *ngIf="userModifyForm.get('nombre_usuario')?.invalid && userModifyForm.get('nombre_usuario')?.touched" class="text-danger">
+                                      Nombre de usuario requerido
+                                    </small>
+                                </div>
+                              </div>
+                              <div class="buton-action-container">
+                                <button class="add-button"
+                                        type="submit" 
+                                        [disabled]="!userModifyForm.valid">
+                                    <span class="add-text">Modificar</span>
+                                </button>
+                                <button class="cancel-button"
+                                        type="button" 
+                                        (click)="openModifyUser()">
+                                    <span class="cancel-text">Cancelar</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal user -->
+        <div class="modal-overlay" *ngIf="isNewUser" (click)="openNewUser()">
+            <!-- modal -->
+            <div class="modal-container">
+                <div class="modal-content" (click)="$event.stopPropagation()">
+                    <span class="modal-title">Agregar nuevo usuario</span>
+                    <div class="form-container">
+                        <form [formGroup]="userForm"
+                              (ngSubmit)="saveUser()">
+                            <div class="form-column">
+                                <div class="form-user-name">
+                                    <span class="form-title">Usuario *</span>
+                                    <input class="form-input" 
+                                           formControlName="nombre_usuario"
+                                           [class.input-error]="userForm.get('nombre_usuario')?.invalid && userForm.get('nombre_usuario')?.touched">
+                                    <small *ngIf="userForm.get('nombre_usuario')?.invalid && userForm.get('nombre_usuario')?.touched" class="text-danger">
+                                      Nombre de usuario requerido
+                                    </small>
+                                </div>
+                                <div class="form-password">
+                                    <span class="form-title">Contraseña *</span>
+                                    <input class="form-input" 
+                                           type="password"
+                                           formControlName="contraseña"
+                                           [class.input-error]="userForm.get('contraseña')?.invalid && userForm.get('contraseña')?.touched">
+                                    <small *ngIf="userForm.get('contraseña')?.invalid && userForm.get('contraseña')?.touched" class="text-danger">
+                                      Contraseña requerido
+                                    </small>
+                                </div>
+                                <div class="form-rol">
+                                    <span class="form-title">Sucursal *</span>
+                                    <select formControlName="rol"
+                                            [class.input-error]="userForm.get('rol')?.invalid && userForm.get('rol')?.touched">
+                                      <option *ngFor="let rol of rolesList" [value]="rol.rol_Id">
+                                        {{ rol.nombre }}
+                                      </option>
+                                    </select>
+                                    <small *ngIf="userForm.get('rol')?.invalid && userForm.get('rol')?.touched" class="text-danger">
+                                      Rol requerido
+                                    </small>
+                                </div>
+                                <div class="form-checkbox">
+                                    <input class="form-checkbox-input"
+                                           type="checkbox"
+                                           name="haveNIP"
+                                           [checked]="haveNIP"
+                                           (click)="checkboxHaveNIP()">
+                                    <span class="form-checkbox-text">¿Cuenta con NIP?</span>                    
+                                </div>
+                                <div class="form-nip"
+                                     *ngIf="haveNIP">
+                                    <span class="form-title">NIP *</span>
+                                    <input class="form-input"
+                                           formControlName="nip">
+                                    <small *ngIf="userForm.get('nip')?.invalid && userForm.get('nip')?.touched" class="text-danger">
+                                        NIP requerido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="buton-action-container">
+                                <button class="add-button"
+                                        type="submit" 
+                                        [disabled]="!userForm.valid">
+                                    <span class="add-text">Agregar</span>
+                                </button>
+                                <button class="cancel-button"
+                                        type="button" 
+                                        (click)="openNewUser()">
+                                    <span class="cancel-text">Cancelar</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal user details -->
+        <div class="modal-overlay" *ngIf="isOpenDetails" (click)="openDetails()">
+            <!-- modal -->
+            <div class="modal-container">
+                <div class="modal-content" (click)="$event.stopPropagation()">
+                    <span class="modal-title">Información del usuario</span>
+                    <div class="form-container">
+                        <div class="form-row">
+                            <div class="form-nip">
+                                <span class="form-title">NIP</span>
+                                <input class="form-input" 
+                                       [value]="(userClient ? userClient.usuario.nip : userEmployee?.usuario?.nip) || 'N/A'"
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-full-name">
+                                <span class="form-title">Nombre completo</span>
+                                <input class="form-input" 
+                                       [value]="(userClient ? userClient.cliente.nombre_Completo : userEmployee?.empleado?.nombre_Completo) || 'N/A'"
+                                       readonly>
+                            </div>
+                            <div class="form-phone">
+                                <span class="form-title">Celular</span>
+                                <input class="form-input" 
+                                       [value]="(userClient ? userClient.cliente.celular : userEmployee?.empleado?.celular) || 'N/A'"
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-observation"
+                                 *ngIf="userClient">
+                                <span class="form-title">Observación</span>
+                                <textarea class="form-textarea" readonly>
+                                    {{ userClient.cliente.observacion || 'N/A' }}
+                                </textarea>
+                            </div>
+                            <div class="form-branch"
+                                 *ngIf="userEmployee">
+                                 <span class="form-title">Sucursal</span>
+                                <input class="form-input" 
+                                       [value]="userEmployee.empleado.sucursal.ubicacion || 'N/A'"
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-membership"
+                                 *ngIf="userClient?.cliente?.membresia">
+                                <span class="form-title">Membresía</span>
+                                <input class="form-input" 
+                                       [value]="userClient?.cliente?.membresia || 'N/A'"
+                                       readonly>
+                            </div>
+                            <div class="form-column">
+                                <div class="form-start-date"
+                                     *ngIf="userClient?.cliente?.fecha_Inicio">
+                                    <span class="form-title">Inicio</span>
+                                    <input class="form-input" 
+                                           [value]="userClient?.cliente?.fecha_Inicio || 'N/A'"
+                                           readonly>
+                                </div>
+                                <div class="form-end-date"
+                                     *ngIf="userClient?.cliente?.fecha_Fin">
+                                    <span class="form-title">Inicio</span>
+                                    <input class="form-input" 
+                                           [value]="userClient?.cliente?.fecha_Fin || 'N/A'"
+                                           readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button class="close-button"
+                                    type="button" 
+                                    (click)="openDetails()">
+                                <span close="close-text">Cerrar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

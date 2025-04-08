@@ -36,7 +36,7 @@
                 <span *ngIf="isOpen" class="sidebar-text">Membresías</span>
               </a>
             </li>
-            <li>
+            <li *ngIf="false">
               <a [routerLink]="['/exercises-management']">
                 <mat-icon class="sidebar-icon">fitness_center</mat-icon>
                 <span *ngIf="isOpen" class="sidebar-text">Ejercicios</span>
@@ -60,6 +60,11 @@
                 <span *ngIf="isOpen" class="sidebar-text">Usuarios</span>
               </a>
             </li>
+            <li *ngIf="user!=null">
+              <a class="logout" (click)="logout()">
+                Cerrar sesión
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -71,7 +76,6 @@
     <!-- header -->
     <div class="header" [class.collapsed]="!isOpen" *ngIf="router.url !== '/login'">
       <span *ngIf="!isOpen" class="header-title">Iron Revolution Center</span>
-      <button (click)="logout()">Cerrar sesión</button>
       
 
       <div class="user-session">

@@ -1,0 +1,449 @@
+.route, .route a {
+    color: #606060;
+    font-family: "Roboto";
+    font-weight: bold;
+    font-size: 16px;
+  }
+      
+  .route a {
+    cursor: pointer;
+    text-decoration: none;
+  }
+    
+  .main-container {
+    width: auto;
+    height: auto;
+    padding: 15px 15px 15px 15px;
+    background: #FFFFFF;
+    border-color: #D6D6D6;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 16px 16px 16px 16px;
+    margin-top: 15px;
+  }
+    
+  .title {
+    display: flex;
+    align-items: center;
+  }
+    
+  .container-title {
+    color: #444444;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.28;
+    display: inline-flex;
+    align-items: center;
+  }
+    
+  .container-icon {
+    width: 30px;
+    height: 30px;
+    color: #444444;
+  }
+    
+  .filter-container {
+    display: flex;
+    align-items: center;
+    background: #F3F3F3;
+    padding: 15px 15px 15px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  .list-roles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rol {
+    color: #606060;
+    font-family: "Roboto";
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .roles {
+    height: 33px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 1px;
+    -webkit-text-fill-color: #606060;
+    font-family: "Roboto";
+  }
+
+  .search-bar {
+    display: flex;
+    height: 33px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    color: #606060;
+    border: 1px solid #000000;
+    margin-top: 25px;
+    margin-left: 10px;
+    background-color: #FFFFFF;
+  }
+  
+  .clean-button {
+    display: flex;
+    height: 33px;
+    align-items: center;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    color: #606060;
+    border-color: 1px solid #000000;
+    border-radius: 1px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 23px;
+  }
+    
+  .cleaning-service-icon {
+    width: 20px;
+    height: 20px;
+    color: #929292;
+    margin-right: 10px;
+  }
+  
+  .apply-filters-icon {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    margin-top: 22px;
+    color: #606060;
+  }
+
+  .register-user-button {
+    display: flex;
+    width: auto;
+    height: auto;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 8px 8px 8px;
+    background: #7EC744;
+    border-color: #FFFFFF00;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px 7px 7px 7px;
+    font-family: "Roboto";
+    color: #FFFFFF;
+    margin: 20px 0px 20px 0px;
+  }
+  
+  .add-icon {
+    width: 24px;
+    height: 24px;
+    color: #FFFFFF;
+  }
+
+  .table-container {
+    width: 80%;
+    height: auto;
+    padding: 15px 15px 15px 15px;
+    background: #FFFFFF;
+    border-color: #D6D6D6;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 16px 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-container-roles {
+    width: 20%;
+    height: auto;
+    margin-left: 20px;
+    padding: 15px 15px 15px 15px;
+    background: #FFFFFF;
+    border-color: #D6D6D6;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 16px 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .table-roles thead {
+    font-weight: bold;
+  }
+  
+  .table-roles  tbody tr:nth-child(even) {
+    background-color: #F8F8F8;
+  }
+  
+  .table-roles th,
+  .table-roles td {
+      padding: 12px;
+      border-bottom: 1px solid #EBEBEB;
+  }
+  
+  .table-users {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .table-users thead {
+    font-weight: bold;
+  }
+  
+  .table-users  tbody tr:nth-child(even) {
+    background-color: #F8F8F8;
+  }
+  
+  .table-users th,
+  .table-users td {
+      padding: 12px;
+      border-bottom: 1px solid #EBEBEB;
+  }
+
+  .buton-action-container {
+    display: flex; 
+    flex-direction: row;
+  }
+
+  .details-button,
+  .modify-button,
+  .delete-button {
+    display: flex;
+    width: auto;
+    height: 33px;
+    padding: 4px 4px 4px 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px 7px 7px 7px;
+    align-items: center;
+}
+
+.details-button {
+    background: #1FA2C4;
+    border-color: #FFFFFF00;
+}
+
+.modify-button {
+    background: #C7A244;
+    border-color: #FFFFFF00;
+    margin: 0px 5px 0px 5px;
+}
+  
+.delete-button {
+    background: #C74444;
+    border-color: #FFFFFF00;
+    margin-left: 10px;
+}
+
+.details-icon,
+.modify-icon,
+.delete-icon {
+  width: 24px;
+  height: 24px;
+  color: #FFFFFF;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    width: auto;
+    align-items: flex-start;
+  }
+  
+  .modal-content {
+    display: flex;
+    padding: 20px 20px 20px 20px;
+    background: #FFFFFF;
+    border-color: #D6D6D6;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 16px 16px 16px 16px; 
+    height: auto; 
+  }
+
+  .modal-title {
+    color: #444444;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+  }
+
+  .form-title {
+    color: #444444;
+    font-family: "Roboto";
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 6px 8px 6px 8px;
+    background: #FFFFFF;
+    color: #000000;
+    border-color: #D6D6D6;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 3px 3px 3px 3px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 15px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+
+  .form-nip,
+  .form-full-name,
+  .form-phone,
+  .form-observation,
+  .form-branch,
+  .form-membership,
+  .form-start-date,
+  .form-end-date,
+  .form-user-name,
+  .form-password,
+  .form-rol {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-rol {
+    width: 290px;
+  }
+
+  .form-nip {
+    width: 85px;
+  }
+
+  .form-full-name {
+    width: 270px;
+  }
+
+  .form-phone{
+    width: 110px;
+    margin-left: 10px;
+  }
+
+  .form-textarea {
+    width: 390px;
+    max-height: 80px;
+  }
+
+  .form-membership {
+    margin-right: 30px;
+  }
+
+  .form-branch {
+    width: 390px;
+  }
+
+  .form-user-name,
+  .form-password {
+    width: 290px;
+  }
+
+  .form-checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .form-checkbox-text {
+    color: #444444;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 5px;
+  }
+
+  .close-button {
+    width: auto;
+    height: auto;
+    padding: 0px 10px 1px 10px;
+    border-radius: 3px 3px 3px 3px;
+    text-align: center;
+    border: none;
+    width: 130px;
+    height: 40px;
+    cursor: pointer;
+    background: #EBEBEB;
+    margin-left: 10px;
+    margin-top: 20px;
+  }
+
+  .close-text {
+    font-family: "Roboto";
+    font-weight: 600;
+    font-size: 18px;
+    color: #444444;
+  }
+
+  .add-button,
+.cancel-button {
+  width: auto;
+  height: auto;
+  padding: 0px 10px 1px 10px;
+  border-radius: 3px 3px 3px 3px;
+  text-align: center;
+  border: none;
+  width: 130px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.add-button {
+  background: #444444;
+}
+.cancel-button {
+  background: #EBEBEB;
+  margin-left: 10px;
+}
+
+.add-text,
+.cancel-text {
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.add-text{
+  color: #FFFFFF;
+}
+
+.cancel-text {
+  color: #444444;
+}
+
+.buton-action-container {
+  display: flex; 
+  flex-direction: row;
+  margin-top: 10px;
+}

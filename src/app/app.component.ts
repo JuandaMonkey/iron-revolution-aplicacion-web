@@ -9,7 +9,7 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../service/auth/auth.service';
 
 // models
-import { Users } from '../model/users/users.model';
+import { UsersSession } from '../model/users/users-session.model';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   isOpenLogout = false;
 
   // session
-  user: Users | null = null; 
+  user: UsersSession | null = null; 
   isAdmin!: boolean;
 
   constructor (

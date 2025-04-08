@@ -11,6 +11,7 @@ import { ActivityCenter } from '../../model/activity_center/activity-center.mode
 // services 
 import { BranchesService } from '../../service/branches/branches.service';
 import { ActivityCenterService } from '../../service/activity-center/activity-center.service';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'app-statistics-overview',
@@ -49,10 +50,12 @@ export class StatisticsOverviewComponent implements OnInit {
     const today = new Date();
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(today.getDate() - 7);
+    const maxDay = new Date();
+    maxDay.setDate(today.getDate() + 1);
 
-    this.selectMaxDate = this.formatDate(today);
+    this.selectMaxDate = this.formatDate(maxDay);
     this.selectStartDay = this.formatDate(sevenDaysAgo); 
-    this.selectEndDay = this.formatDate(today); 
+    this.selectEndDay = this.formatDate(maxDay); 
 
     this.getListActivityCenter(this.selectBranchId, this.selectStartDay, this.selectEndDay);
   }

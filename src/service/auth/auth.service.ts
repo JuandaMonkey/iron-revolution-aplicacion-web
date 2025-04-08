@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 // models
-import { Users } from '../../model/users/users.model';
+import { UsersSession } from '../../model/users/users-session.model'; 
 import { UsersLogin } from '../../model/users/users-login.model';
 import { UsersToken } from '../../model/users/users-token.model';
 
@@ -20,7 +20,7 @@ export class AuthService {
   // token and session iformation
   private readonly TOKEN_KEY = 'token';
 
-  private currentUser = new BehaviorSubject<Users | null>(null);
+  private currentUser = new BehaviorSubject<UsersSession | null>(null);
   public currentUser$ = this.currentUser.asObservable();
 
   constructor(
@@ -49,7 +49,7 @@ export class AuthService {
   private saveInformationToken(token: string) {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const userData: Users = {
+      const userData: UsersSession = {
         nombre_Usuario: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
         rol: payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
         nip: payload['NIP'],
@@ -72,7 +72,7 @@ export class AuthService {
     }
   }
 
-  public getCurrentUser(): Users | null {
+  public getCurrentUser(): UsersSession | null {
     return this.currentUser.value;
   }
 

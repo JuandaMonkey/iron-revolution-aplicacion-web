@@ -27,13 +27,13 @@ export class ExercisesManagementComponent implements OnInit {
   exercisesList: Exercises[] = [];
   selectedExerciseType: string = '';
 
-  // status for new exercises
+  // status for new exercise
   isNewExercise: boolean = false;
 
-  // modify exercises
+  // modify exercise
   selectedExerciseId: string | null = null;
 
-  // exercises form
+  // exercise form
   exerciseForm!: FormGroup;
 
   constructor (
